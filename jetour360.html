@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>360° View</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('images/bg.jpg'); /* Replace 'background.jpg' with your actual background image file path */
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 1000px; /* Limit the maximum width of the container */
+            margin: 0 auto; /* Center the container horizontally */
+            padding: 20px;
+        }
+
+        .menu {
+            display: flex;
+            justify-content: space-between; /* Align items horizontally with space between them */
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .left-menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .c360-icon {
+            background-image: url('images/icon.png'); /* Replace 'icon.png' with your actual icon file path */
+            background-size: contain;
+            background-repeat: no-repeat;
+            width: 60px; /* Adjust width and height as needed */
+            height: 60px;
+            margin-right: 10px; /* Add margin between icon and text */
+            cursor: pointer;
+        }
+
+        .title {
+            margin: 0;
+            font-size: 24px; /* Adjust the font size */
+            color: black;
+        }
+
+        .right-menu {
+            display: flex;
+        }
+
+        .mode {
+            margin: 0 10px;
+            cursor: pointer;
+            font-size: 24px; /* Adjust the font size */
+            color:  black;
+        }
+
+        .c360-canvas {
+            width: 100%; /* Adjust width as needed */
+            height: 500px; /* Adjust height as needed */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="menu">
+            <div class="left-menu">
+                <div class="c360-icon"></div>
+                <h1 class="title">360° View</h1>
+            </div>
+            <div class="right-menu">
+                <p class="mode" style="Color:Green;">Exterior</p>
+                <p class="mode">Interior</p>
+            </div>
+        </div>
+        <div class="c360-canvas">
+            <div class="cloudimage-360" data-folder="images/" data-filename="X70PLUS_EXT_360_{index}.png" data-amount="37" data-bottom-circle hide-360-logo></div>
+        </div>
+    </div>
+
+    <script src="https://scaleflex.cloudimg.io/plugins/js-cloudimage-360-view/2.7.1/js-cloudimage-360-view.min.js"></script>
+</body>
+</html>
