@@ -3,22 +3,15 @@
 <head>
     <meta charset="utf-8">
     <title>360° View</title>
+    <link rel="stylesheet" href="style.css">
+
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-image: url('images/bg.jpg'); /* Replace 'background.jpg' with your actual background image file path */
-            background-size: cover;
-            background-repeat: no-repeat;
-            font-family: Arial, sans-serif;
-            color: #fff;
-            overflow: hidden;
-        }
 
         .container {
             max-width: 1000px; /* Limit the maximum width of the container */
             margin: 0 auto; /* Center the container horizontally */
             padding: 20px;
+
         }
 
         .menu {
@@ -33,7 +26,7 @@
             align-items: center;
         }
 
-        .c360-icon {
+        .c360-icon-ext {
             background-image: url('images/icon.png'); /* Replace 'icon.png' with your actual icon file path */
             background-size: contain;
             background-repeat: no-repeat;
@@ -41,6 +34,17 @@
             height: 60px;
             margin-right: 10px; /* Add margin between icon and text */
             cursor: pointer;
+        }
+        .c360-icon-int {
+            background-image: url('images/interior-icon.png'); /* Replace 'icon.png' with your actual icon file path */
+            background-size: contain;
+            background-repeat: no-repeat;
+            width: 60px; /* Adjust width and height as needed */
+            height: 60px;
+            margin-right: 10px; /* Add margin between icon and text */
+            cursor: pointer;
+            /*position: absolute;
+            top: 5.43rem;*/
         }
 
         .title {
@@ -51,38 +55,186 @@
 
         .right-menu {
             display: flex;
+            align-items: center;
+            position: fixed;
+            right: 3.9rem;
+            top: 3.43rem;
+            z-index: 2; /* Ensure menu is above panorama */
         }
 
-        .mode {
+        .mode-ext {
             margin: 0 10px;
             cursor: pointer;
-            font-size: 24px; /* Adjust the font size */
-            color:  black;
+            /*font-size: 24px;  Adjust the font size */
+        }
+
+        .mode-int {
+            margin: 0 10px;
+            cursor: pointer;
+            /*font-size: 24px;  Adjust the font size */
         }
 
         .c360-canvas {
             width: 100%; /* Adjust width as needed */
             height: 500px; /* Adjust height as needed */
         }
+
+        .pano-image-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            z-index: 1; /* Ensure panorama is behind menu and icon */
+        }
+
+        .pano-image {
+            width: 100%;
+            height: 100%;
+        }
+
+
     </style>
+
+
 </head>
 <body>
-    <div class="container">
-        <div class="menu">
-            <div class="left-menu">
-                <div class="c360-icon"></div>
-                <h1 class="title">360° View</h1>
+
+    <div class="container" id="interior-cont" style="display:none;" >
+        <div class="interior" id="pano-interior" >
+            <div class="menu" id="menu-intrior">
+
+                <div class="image-container" ></div>
+                <div class="left-menu">
+                    <div class="c360-icon-int" ></div>
+                </div>
+                <div class="right-menu" >
+                    <p class="mode-ext"  onclick="showExterior()">Exterior</p>
+                    <p class="mode-int"  onclick="showInterior()">Interior</p>
+                </div>
             </div>
-            <div class="right-menu">
-                <p class="mode" style="Color:Green;">Exterior</p>
-                <p class="mode">Interior</p>
-            </div>
-        </div>
-        <div class="c360-canvas">
-            <div class="cloudimage-360" id="jetour360" data-folder="images/" data-filename="X70PLUS_EXT_360_{index}.png" data-amount="37" data-bottom-circle hide-360-logo data-fullscreen data-autoplay-behavior="spin-xy"></div>
         </div>
     </div>
 
-    <script src="https://scaleflex.cloudimg.io/plugins/js-cloudimage-360-view/2.7.1/js-cloudimage-360-view.min.js"></script>
+    <div class="container" id="exterior-cont" style="display:block;" >
+        <div class="exterior" id="pano-exterior" >
+            <div class="menu" id="menu-extrior">
+                <div class="left-menu">
+                    <div class="c360-icon-ext"></div>
+                    <h1 class="title">360° View</h1>
+                </div>
+                <div class="right-menu">
+                    <p class="mode-ext" style="Color:#075c48;font-size: 24px;font-weight: 700;" onclick="showExterior()">Exterior</p>
+                    <p class="mode-int" style="Color:grey;font-size: 15px;font-weight: 400;" onclick="showInterior()">Interior</p>
+                </div>
+            </div>        
+        </div>
+          <div class="c360-canvas">
+            <div class="cloudimage-360" id="jetour360" data-folder="images/" data-filename="X70PLUS_EXT_360_{index}.png" data-amount="37" data-bottom-circle hide-360-logo data-autoplay-behavior="spin-xy" ></div>
+        </div> 
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/105/three.min.js"></script>
+    <script src="https://scaleflex.cloudimg.io/v7/plugins/js-cloudimage-360-view/latest/js-cloudimage-360-view.min.js?func=proxy"></script> 
+    <script src="./js/panolens.min.js"></script> 
+    <!-- <script src="./js/main.js"></script>  -->
+
+    <script>
+
+        const HOTSPOTS_CONFIG = [
+            {
+                positions: [
+                   { imageIndex: 36, xCoord: 165, yCoord: 190 },
+                   { imageIndex: 37, xCoord: 175, yCoord: 190 },
+                   { imageIndex: 1, xCoord: 175, yCoord: 190 },
+                   { imageIndex: 2, xCoord: 195, yCoord: 190 },
+                   { imageIndex: 3, xCoord: 225, yCoord: 190 },
+                   { imageIndex: 4, xCoord: 255, yCoord: 190 },
+                   { imageIndex: 5, xCoord: 285, yCoord: 190 },
+                   { imageIndex: 6, xCoord: 315, yCoord: 190 },
+                   { imageIndex: 7, xCoord: 345, yCoord: 190 },
+                   { imageIndex: 8, xCoord: 365, yCoord: 190 },
+
+                    // Ajoutez d'autres positions de hotspots si nécessaire
+                ],
+                variant: {
+                    images: [
+                        { src: 'images/x70_moteur.png', alt: 'air snorkel' }
+                    ],
+                   // title: 'Moteur X70', // optional
+                   description: 'Moteur 1.5L turbo 147ch boite automatique 8 rapports.', // optional
+                   // moreDetailsUrl: 'https://forcegurkha.co.in', // optional
+                   // moreDetailsTitle: 'Read more' // optional
+                },
+                popupProps: {
+                   popupSelector: 'air-intake-popup', // optional
+                   offset: [15, 5], // optional
+                   arrow: true, // optional
+                   placement: 'top' // optional
+                  },
+                  indicatorSelector: 'first-hotspot-icon', // optional
+                  // initialDimensions: [ 1170, 672 ],
+                 
+
+            }
+        ];
+
+        // Ajoutez les hotspots à la vue à 360 degrés
+        window.CI360.addHotspots("jetour360", HOTSPOTS_CONFIG);
+
+
+        function showInterior() {
+            // Hide the exterior container and show the interior container
+            document.getElementById('exterior-cont').style.display = 'none';
+            document.getElementById('interior-cont').style.display = 'block';
+            document.querySelector('.mode-ext').style.color = 'grey' ;
+            document.querySelector('.mode-ext').style.fontSize  = '15px' ;
+            document.querySelector('.mode-int').style.fontSize  = '24px' ;
+            document.querySelector('.mode-ext').style.fontWeight  = '400' ;
+            document.querySelector('.mode-int').style.fontWeight  = '700' ;
+            document.querySelector('.mode-int').style.color = '#22a385' ;
+            
+            // Initialize the Panolens viewer for interior view if not already done
+            if (!window.panoViewer) {
+                const panoImageContainer = document.querySelector('.image-container');
+                const panoImageUrl = 'images/x70P.jpg'; // Replace with actual interior image path
+                const pano = new PANOLENS.ImagePanorama(panoImageUrl);
+                const initialYaw = -256.0; // Horizontal angle in radians (0 is front, Math.PI is back)
+                const initialPitch = 0;
+                window.panoViewer = new PANOLENS.Viewer({ container: panoImageContainer });
+                window.panoViewer.add(pano);
+                pano.addEventListener('load', function() {
+                    // Set the initial camera position
+                    window.panoViewer.camera.position.set(Math.sin(initialYaw), initialPitch, Math.cos(initialYaw));
+                });
+            }
+
+            console.log('Interior view activated');
+        }
+
+        function showExterior() {
+            // Hide the interior container and show the exterior container
+            document.getElementById('interior-cont').style.display = 'none';
+            document.getElementById('exterior-cont').style.display = 'block';
+            document.querySelector('.mode-ext').style.color = 'white' ;
+            // document.querySelector('.mode-ext').style.fontSize  = '24px' ;
+            // document.querySelector('.mode-int').style.fontSize  = '55px' ;
+            document.querySelector('.mode-int').style.color = 'grey' ;
+            console.log('Exterior view activated');
+        }
+
+    </script>
+    <style >
+        .cloudimage-360-modal-description {
+          font-size: 13px;
+          font-weight: 400;
+          line-height: 16px;
+          margin: 4px 0;
+        }
+
+    </style>
 </body>
 </html>
