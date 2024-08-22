@@ -1,0 +1,121 @@
+body {
+    margin: 0;
+    padding: 0;
+    /*background-image: url('images/bg.jpg');  Replace 'background.jpg' with your actual background image file path */
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: Arial, sans-serif;
+    /*color: #fff;*/
+    overflow: hidden;
+}
+
+
+h2 {
+    margin: 0;
+    color: white;
+}
+
+.tour__head {
+    padding-top: 10vh;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /*border: 2px solid #ebb47a;*/
+    border-radius: 0px;
+    overflow: hidden;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.container {
+            max-width: 1000px; /* Limit the maximum width of the container */
+            margin: 0 auto; /* Center the container horizontally */
+            padding: 20px;
+
+        }
+
+.menu {
+    display: flex;
+    justify-content: space-between; /* Align items horizontally with space between them */
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.left-menu {
+    display: flex;
+    align-items: center;
+}
+
+.c360-icon-ext {
+    background-image: url('images/icon.png'); /* Replace 'icon.png' with your actual icon file path */
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 60px; /* Adjust width and height as needed */
+    height: 60px;
+    margin-right: 10px; /* Add margin between icon and text */
+    cursor: pointer;
+}
+.c360-icon-int {
+    background-image: url('images/interior-icon.png'); /* Replace 'icon.png' with your actual icon file path */
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 60px; /* Adjust width and height as needed */
+    height: 60px;
+    margin-right: 10px; /* Add margin between icon and text */
+    cursor: pointer;
+    position: absolute;
+    top: 5.43rem;
+}
+
+.title {
+    margin: 0;
+    font-size: 24px; /* Adjust the font size */
+    color: black;
+}
+
+.right-menu {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    right: 3.9rem;
+    top: 3.43rem;
+    z-index: 2; /* Ensure menu is above panorama */
+}
+
+.mode {
+    margin: 0 10px;
+    cursor: pointer;
+    font-size: 24px; /* Adjust the font size */
+    color:  black;
+}
+
+.c360-canvas {
+    width: 100%; /* Adjust width as needed */
+    height: 500px; /* Adjust height as needed */
+}
+
+.pano-image-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 1; /* Ensure panorama is behind menu and icon */
+}
+
+.pano-image {
+    width: 100%;
+    height: 100%;
+}
